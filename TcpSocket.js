@@ -6,14 +6,9 @@
  * @flow
  */
 
-if (!(global.process && global.process.nextTick)) {
-  global.process = require('process'); // needed to make stream-browserify happy
-}
-
-var Buffer = (global.Buffer = global.Buffer || require('buffer').Buffer);
 
 var util = require('util');
-var stream = require('stream-browserify');
+var stream = require('react-native-stream');
 // var EventEmitter = require('events').EventEmitter;
 var ipRegex = require('ip-regex');
 var { NativeEventEmitter, NativeModules } = require('react-native');
