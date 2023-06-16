@@ -6,7 +6,7 @@
  * @flow
  */
 
-
+var Buffer = (global.Buffer = global.Buffer || require('buffer').Buffer);
 var util = require('util');
 var stream = require('react-native-stream');
 // var EventEmitter = require('events').EventEmitter;
