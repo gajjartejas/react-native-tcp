@@ -5,19 +5,17 @@
  * @providesModule TcpSocket
  * @flow
  */
-
-var Buffer = (global.Buffer = global.Buffer || require('buffer').Buffer);
-var util = require('util');
-var stream = require('react-native-stream');
+const Buffer = (global.Buffer = global.Buffer || require('buffer').Buffer);
+const util = require('util');
+const stream = require('react-native-stream');
 // var EventEmitter = require('events').EventEmitter;
-var ipRegex = require('ip-regex');
-var { NativeEventEmitter, NativeModules } = require('react-native');
-var Sockets = NativeModules.TcpSockets;
-var base64 = require('base64-js');
-var Base64Str = require('./base64-str');
-var noop = function () { };
-var instances = 0;
-var STATE = {
+const ipRegex = require('ip-regex');
+const { NativeEventEmitter, NativeModules } = require('react-native');
+const Sockets = NativeModules.TcpSockets;
+const Base64Str = require('./base64-str');
+const noop = function () { };
+let instances = 0;
+const STATE = {
   DISCONNECTED: 0,
   CONNECTING: 1,
   CONNECTED: 2,
@@ -60,7 +58,7 @@ util.inherits(TcpSocket, stream.Duplex);
 
 TcpSocket.prototype._debug = function () {
   if (__DEV__) {
-    var args = [].slice.call(arguments);
+    const args = [].slice.call(arguments);
     args.unshift('socket-' + this._id);
     console.log.apply(console, args);
   }
@@ -73,7 +71,7 @@ TcpSocket.prototype.connect = function (options, callback): TcpSocket {
   if (options === null || typeof options !== 'object') {
     // Old API:
     // connect(port, [host], [cb])
-    var args = this._normalizeConnectArgs(arguments);
+    const args = this._normalizeConnectArgs(arguments);
     return TcpSocket.prototype.connect.apply(this, args);
   }
 
@@ -81,10 +79,10 @@ TcpSocket.prototype.connect = function (options, callback): TcpSocket {
     this.once('connect', callback);
   }
 
-  var host = options.host || 'localhost';
-  var port = options.port || 0;
-  var localAddress = options.localAddress;
-  var localPort = options.localPort;
+  const host = options.host || 'localhost';
+  let port = options.port || 0;
+  const localAddress = options.localAddress;
+  const localPort = options.localPort;
 
   if (localAddress && !ipRegex({ exact: true }).test(localAddress)) {
     throw new TypeError(
@@ -165,7 +163,7 @@ TcpSocket.prototype._activeTimer = function (msecs, wrapper) {
   }
 
   if (!wrapper) {
-    var self = this;
+    const self = this;
     wrapper = function () {
       self._timeout = null;
       self.emit('timeout');
@@ -307,7 +305,7 @@ TcpSocket.prototype._onConnection = function (info: {
 }): void {
   this._debug('received', 'connection');
 
-  var socket = new TcpSocket({ id: info.id });
+  const socket = new TcpSocket({ id: info.id });
 
   socket._registerEvents();
   setConnected(socket, info.address);
@@ -329,13 +327,11 @@ TcpSocket.prototype._onData = function (data: string): void {
     // will prevent this from being called again until _read() gets
     // called again.
 
-    var ret = this.push(new Buffer(data, 'base64'));
+    const ret = this.push(new Buffer(data, 'base64'));
     if (this._reading && !ret) {
       this._reading = false;
       this.pause();
     }
-
-    return;
   }
 };
 
@@ -367,7 +363,7 @@ TcpSocket.prototype._write = function (
   encoding: ?String,
   callback: ?(err: ?Error) => void,
 ): boolean {
-  var self = this;
+  const self = this;
 
   if (this._state === STATE.DISCONNECTED) {
     throw new Error('Socket is not connected.');
@@ -376,7 +372,7 @@ TcpSocket.prototype._write = function (
   }
 
   callback = callback || noop;
-  var str;
+  let str;
   if (typeof buffer === 'string') {
     self._debug('socket.WRITE(): encoding as base64');
     str = Base64Str.encode(buffer);
@@ -437,7 +433,7 @@ function normalizeError(err) {
 // Returns an array [options] or [options, cb]
 // It is the same as the argument of Socket.prototype.connect().
 TcpSocket.prototype._normalizeConnectArgs = function (args) {
-  var options = {};
+  let options = {};
 
   if (args[0] !== null && typeof args[0] === 'object') {
     // connect(options, [cb])
@@ -450,7 +446,7 @@ TcpSocket.prototype._normalizeConnectArgs = function (args) {
     }
   }
 
-  var cb = args[args.length - 1];
+  const cb = args[args.length - 1];
   return typeof cb === 'function' ? [options, cb] : [options];
 };
 

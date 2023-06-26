@@ -71,9 +71,9 @@ public final class TcpSockets extends ReactContextBaseJavaModule implements TcpS
                 }
             }.execute().get();
         } catch (InterruptedException ioe) {
-            FLog.e(TAG, "onCatalystInstanceDestroy", ioe);
+            //FLog.e(TAG, "onCatalystInstanceDestroy", ioe);
         } catch (ExecutionException ee) {
-            FLog.e(TAG, "onCatalystInstanceDestroy", ee);
+            //FLog.e(TAG, "onCatalystInstanceDestroy", ee);
         }
     }
 
@@ -91,10 +91,10 @@ public final class TcpSockets extends ReactContextBaseJavaModule implements TcpS
                 try {
                     socketManager.listen(cId, host, port);
                 } catch (UnknownHostException uhe) {
-                    FLog.e(TAG, "listen", uhe);
+                    //FLog.e(TAG, "listen", uhe);
                     onError(cId, uhe.getMessage());
                 } catch (IOException ioe) {
-                    FLog.e(TAG, "listen", ioe);
+                    //FLog.e(TAG, "listen", ioe);
                     onError(cId, ioe.getMessage());
                 }
             }
@@ -110,10 +110,10 @@ public final class TcpSockets extends ReactContextBaseJavaModule implements TcpS
                 try {
                     socketManager.connect(cId, host, port);
                 } catch (UnknownHostException uhe) {
-                    FLog.e(TAG, "connect", uhe);
+                    //FLog.e(TAG, "connect", uhe);
                     onError(cId, uhe.getMessage());
                 } catch (IOException ioe) {
-                    FLog.e(TAG, "connect", ioe);
+                    //FLog.e(TAG, "connect", ioe);
                     onError(cId, ioe.getMessage());
                 }
             }

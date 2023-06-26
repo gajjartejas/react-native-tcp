@@ -6,10 +6,10 @@
  * @flow
  */
 
-var ipRegex = require('ip-regex');
+const ipRegex = require('ip-regex');
 
-var Socket = require('./TcpSocket');
-var Server = require('./TcpServer');
+const Socket = require('./TcpSocket');
+const Server = require('./TcpServer');
 
 exports.createServer = function (
   connectionListener: (socket: Socket) => void,
@@ -27,7 +27,7 @@ exports.connect = exports.createConnection = function (): Socket {
 };
 
 exports.isIP = function (input: string): number {
-  var result = 0;
+  let result = 0;
   if (ipRegex.v4({ exact: true }).test(input)) {
     result = 4;
   } else if (ipRegex.v6({ exact: true }).test(input)) {

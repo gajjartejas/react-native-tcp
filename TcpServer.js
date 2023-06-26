@@ -5,13 +5,12 @@
  * @providesModule TcpServer
  * @flow
  */
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
+const { NativeModules } = require('react-native');
+const Sockets = NativeModules.TcpSockets;
 
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
-var { NativeModules } = require('react-native');
-var Sockets = NativeModules.TcpSockets;
-
-var Socket = require('./TcpSocket');
+const Socket = require('./TcpSocket');
 
 function TcpServer(connectionListener: (socket: Socket) => void) {
   if (!(this instanceof TcpServer)) {
@@ -22,7 +21,7 @@ function TcpServer(connectionListener: (socket: Socket) => void) {
     EventEmitter.call(this);
   }
 
-  var self = this;
+  const self = this;
 
   this._socket = new Socket();
 
@@ -51,19 +50,19 @@ util.inherits(TcpServer, EventEmitter);
 
 TcpServer.prototype._debug = function () {
   if (__DEV__) {
-    var args = [].slice.call(arguments);
+    const args = [].slice.call(arguments);
     console.log.apply(console, args);
   }
 };
 
 // TODO : determine how to properly overload this with flow
 TcpServer.prototype.listen = function (): TcpServer {
-  var args = this._socket._normalizeConnectArgs(arguments);
-  var options = args[0];
-  var callback = args[1];
+  const args = this._socket._normalizeConnectArgs(arguments);
+  const options = args[0];
+  const callback = args[1];
 
-  var port = options.port;
-  var host = options.host || '0.0.0.0';
+  const port = options.port;
+  const host = options.host || '0.0.0.0';
 
   if (callback) {
     this.once('listening', callback);
@@ -106,7 +105,7 @@ TcpServer.prototype.close = function (callback: ?() => void) {
     this._socket.end();
   }
 
-  var self = this;
+  const self = this;
   setImmediate(function () {
     self.emit('close');
   });
