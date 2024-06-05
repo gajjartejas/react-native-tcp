@@ -8,9 +8,9 @@
 (function () {
   var Base64Str = {
     _keyStr:
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
     encode: function (e: string) {
-      var t = '';
+      var t = "";
       var n, r, i, s, o, u, a;
       var f = 0;
       e = Base64Str._utf8_encode(e);
@@ -37,11 +37,11 @@
       return t;
     },
     decode: function (e: string) {
-      var t = '';
+      var t = "";
       var n, r, i;
       var s, o, u, a;
       var f = 0;
-      e = e.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+      e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
       while (f < e.length) {
         s = this._keyStr.indexOf(e.charAt(f++));
         o = this._keyStr.indexOf(e.charAt(f++));
@@ -62,8 +62,8 @@
       return t;
     },
     _utf8_encode: function (e) {
-      e = e.replace(/\r\n/g, '\n');
-      var t = '';
+      e = e.replace(/\r\n/g, "\n");
+      var t = "";
       for (var n = 0; n < e.length; n++) {
         var r = e.charCodeAt(n);
         if (r < 128) {
@@ -80,7 +80,7 @@
       return t;
     },
     _utf8_decode: function (e) {
-      var t = '';
+      var t = "";
       var n = 0;
       var r = 0,
         /*c1 = 0, */ c2 = 0;
@@ -97,7 +97,7 @@
           c2 = e.charCodeAt(n + 1);
           var c3 = e.charCodeAt(n + 2);
           t += String.fromCharCode(
-            ((r & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63),
+            ((r & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63)
           );
           n += 3;
         }

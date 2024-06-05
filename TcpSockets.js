@@ -6,13 +6,13 @@
  * @flow
  */
 
-const ipRegex = require('ip-regex');
+const ipRegex = require("ip-regex");
 
-const Socket = require('./TcpSocket');
-const Server = require('./TcpServer');
+const Socket = require("./TcpSocket");
+const Server = require("./TcpServer");
 
 exports.createServer = function (
-  connectionListener: (socket: Socket) => void,
+  connectionListener: (socket: Socket) => void
 ): Server {
   return new Server(connectionListener);
 };
@@ -22,7 +22,7 @@ exports.connect = exports.createConnection = function (): Socket {
   var tcpSocket = new Socket();
   return Socket.prototype.connect.apply(
     tcpSocket,
-    tcpSocket._normalizeConnectArgs(arguments),
+    tcpSocket._normalizeConnectArgs(arguments)
   );
 };
 

@@ -5,12 +5,12 @@
  * @providesModule TcpServer
  * @flow
  */
-const util = require('util');
-const EventEmitter = require('events').EventEmitter;
-const { NativeModules } = require('react-native');
+const util = require("util");
+const EventEmitter = require("events").EventEmitter;
+const { NativeModules } = require("react-native");
 const Sockets = NativeModules.TcpSockets;
 
-const Socket = require('./TcpSocket');
+const Socket = require("./TcpSocket");
 
 function TcpServer(connectionListener: (socket: Socket) => void) {
   if (!(this instanceof TcpServer)) {
@@ -26,21 +26,21 @@ function TcpServer(connectionListener: (socket: Socket) => void) {
   this._socket = new Socket();
 
   // $FlowFixMe: suppressing this error flow doesn't like EventEmitter
-  this._socket.on('connect', function () {
-    self.emit('listening');
+  this._socket.on("connect", function () {
+    self.emit("listening");
   });
   // $FlowFixMe: suppressing this error flow doesn't like EventEmitter
-  this._socket.on('connection', function (socket) {
+  this._socket.on("connection", function (socket) {
     self._connections++;
-    self.emit('connection', socket);
+    self.emit("connection", socket);
   });
   // $FlowFixMe: suppressing this error flow doesn't like EventEmitter
-  this._socket.on('error', function (error) {
-    self.emit('error', error);
+  this._socket.on("error", function (error) {
+    self.emit("error", error);
   });
 
-  if (typeof connectionListener === 'function') {
-    self.on('connection', connectionListener);
+  if (typeof connectionListener === "function") {
+    self.on("connection", connectionListener);
   }
 
   this._connections = 0;
@@ -62,10 +62,10 @@ TcpServer.prototype.listen = function (): TcpServer {
   const callback = args[1];
 
   const port = options.port;
-  const host = options.host || '0.0.0.0';
+  const host = options.host || "0.0.0.0";
 
   if (callback) {
-    this.once('listening', callback);
+    this.once("listening", callback);
   }
 
   this._socket._registerEvents();
@@ -75,9 +75,9 @@ TcpServer.prototype.listen = function (): TcpServer {
 };
 
 TcpServer.prototype.getConnections = function (
-  callback: (err: ?any, count: number) => void,
+  callback: (err: ?any, count: number) => void
 ) {
-  if (typeof callback === 'function') {
+  if (typeof callback === "function") {
     callback.invoke(null, this._connections);
   }
 };
@@ -91,13 +91,13 @@ TcpServer.prototype.address = function (): {
 };
 
 TcpServer.prototype.close = function (callback: ?() => void) {
-  if (typeof callback === 'function') {
+  if (typeof callback === "function") {
     if (!this._socket) {
-      this.once('close', function close() {
-        callback(new Error('Not running'));
+      this.once("close", function close() {
+        callback(new Error("Not running"));
       });
     } else {
-      this.once('close', callback);
+      this.once("close", callback);
     }
   }
 
@@ -107,7 +107,7 @@ TcpServer.prototype.close = function (callback: ?() => void) {
 
   const self = this;
   setImmediate(function () {
-    self.emit('close');
+    self.emit("close");
   });
 };
 
