@@ -38,7 +38,7 @@ function TcpSocket(options: ?{ id: ?number }) {
     this._id = instances++;
   }
 
-  this._eventEmitter = new NativeEventEmitter();
+  this._eventEmitter = new NativeEventEmitter(Sockets);
   stream.Duplex.call(this, {});
 
   // ensure compatibility with node's EventEmitter
