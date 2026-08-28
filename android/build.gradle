@@ -20,12 +20,12 @@ apply plugin: 'com.android.library'
 android {
     namespace "com.peel.react"
     
-    compileSdkVersion safeExtGet('compileSdkVersion', 29)
-    buildToolsVersion safeExtGet('buildToolsVersion', '29.0.2')
+    compileSdkVersion safeExtGet('compileSdkVersion', 34)
+    buildToolsVersion safeExtGet('buildToolsVersion', '34.0.0')
 
     defaultConfig {
         minSdkVersion safeExtGet('minSdkVersion', 21)
-        targetSdkVersion safeExtGet('targetSdkVersion', 29)
+        targetSdkVersion safeExtGet('targetSdkVersion', 34)
         versionCode 1
         versionName "0.2.0"
     }
@@ -38,8 +38,7 @@ android {
         }
     }
 
-    // needed for https://github.com/square/okio/issues/58
-    lintOptions {
+    lint {
         abortOnError false
         warning 'InvalidPackage'
     }

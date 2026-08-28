@@ -6,10 +6,8 @@
 package com.peel.react;
 
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.uimanager.ViewManager;
 
 import java.util.ArrayList;
@@ -25,11 +23,6 @@ public final class TcpSocketsModule implements ReactPackage {
         modules.add(new TcpSockets(reactContext));
 
         return modules;
-    }
-
-    // Deprecated RN 0.47
-    public List<Class<? extends JavaScriptModule>> createJSModules() {
-        return Collections.emptyList();
     }
 
     @Override
